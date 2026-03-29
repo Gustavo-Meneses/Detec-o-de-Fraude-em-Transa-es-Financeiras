@@ -13,7 +13,8 @@ Este projeto demonstra a construção de um modelo de Machine Learning robusto p
 
 Para evitar que o modelo atinja uma "falsa acurácia" de 99% apenas classificando tudo como normal, implementamos as seguintes estratégias:
 
-1. **Engenharia de Variáveis (Feature Engineering):** - Aplicação de transformação logarítmica (`np.log1p`) na variável de valor da transação (`Amount`) para reduzir o impacto de outliers.
+1. **Engenharia de Variáveis (Feature Engineering):**
+   - Aplicação de transformação logarítmica (`np.log1p`) na variável de valor da transação (`Amount`) para reduzir o impacto de outliers.
    - Padronização via `StandardScaler`.
 2. **Reamostragem de Dados (Data Resampling):**
    - Utilização do algoritmo **SMOTE** (Synthetic Minority Over-sampling Technique) para gerar instâncias sintéticas da classe minoritária, ajudando o modelo a reconhecer os padrões da fraude.
@@ -33,16 +34,19 @@ Neste cenário, a acurácia global não é a melhor métrica. Focamos em:
 ## 💻 Como Executar
 
 1. Clone este repositório:
-   ```bash
-   git clone [https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git](https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git)
+```bash
+git clone [https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git](https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git)
+```
 
 2. Instale as dependências:
 ```bash
 pip install pandas numpy scikit-learn imbalanced-learn xgboost shap matplotlib
+```
 
 3. Execute o script principal (ou abra o notebook):
 ```bash
 python main.py
+```
 
-
-Desenvolvido com foco em automação, inteligência e escalabilidade.
+---
+*Desenvolvido com foco em automação, inteligência e escalabilidade.*
