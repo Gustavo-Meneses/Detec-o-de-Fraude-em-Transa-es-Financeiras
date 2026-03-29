@@ -35,3 +35,14 @@ Neste cenário, a acurácia global não é a melhor métrica. Focamos em:
 1. Clone este repositório:
    ```bash
    git clone [https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git](https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git)
+
+2. Instale as dependências:
+```bash
+pip install pandas numpy scikit-learn imbalanced-learn xgboost shap matplotlib
+
+3. Execute o script principal (ou abra o notebook):
+```bash
+python main.py
+
+
+Desenvolvido com foco em automação, inteligência e escalabilidade.
