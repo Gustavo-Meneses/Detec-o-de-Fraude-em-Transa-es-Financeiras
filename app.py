@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import shap
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 from xgboost import XGBClassifier
@@ -81,39 +80,41 @@ elif menu == "Ajuste de Limiar":
     cm = confusion_matrix(y_test, y_pred)
     fig, ax = plt.subplots(figsize=(4, 3))
     im = ax.imshow(cm, cmap="Blues")
-    ax.set_xticks([0, 1]); ax.set_yticks([0, 1])
+    ax.set_xticks([0, 1])
+    ax.set_yticks([0, 1])
     ax.set_xticklabels(["Legítima", "Fraude"])
     ax.set_yticklabels(["Legítima", "Fraude"])
     for i in range(2):
         for j in range(2):
             ax.text(j, i, cm[i, j], ha="center", va="center", color="black")
-    ax.set_xlabel("Predito"); ax.set_ylabel("Real")
+    ax.set_xlabel("Predito")
+    ax.set_ylabel("Real")
     plt.colorbar(im, ax=ax)
     plt.tight_layout()
     st.pyplot(fig)
 
 # ── Aba 3: Explicabilidade SHAP ──────────────────────────────────────────────
 elif menu == "Explicabilidade (SHAP)":
-    st.header("🔍 Por que o modelo tomou a decisão?")
-    st.info("Calculando valores SHAP para 30 amostras de teste...")
+    st.header("🔍 Por que o modelo tomou essa decisão?")
 
-    try:
-        # TreeExplainer é muito mais eficiente que shap.Explainer para XGBoost
-        explainer = shap.TreeExplainer(model)
-        sample = X_test.iloc[:30]
-        shap_values = explainer.shap_values(sample)
+    with st.spinner("Calculando valores SHAP para 30 amostras..."):
+        try:
+            import shap
+            explainer = shap.TreeExplainer(model)
+            sample = X_test.iloc[:30]
+            shap_values = explainer.shap_values(sample)
 
-        st.subheader("Importância Global das Features (SHAP)")
-        fig, ax = plt.subplots(figsize=(8, 5))
-        shap.summary_plot(shap_values, sample, plot_type="bar", show=False)
-        plt.tight_layout()
-        st.pyplot(fig)
+            st.subheader("Importância Global das Features")
+            fig, ax = plt.subplots(figsize=(8, 5))
+            shap.summary_plot(shap_values, sample, plot_type="bar", show=False)
+            plt.tight_layout()
+            st.pyplot(fig)
 
-        st.subheader("Distribuição dos Impactos (Beeswarm)")
-        fig2, ax2 = plt.subplots(figsize=(8, 5))
-        shap.summary_plot(shap_values, sample, show=False)
-        plt.tight_layout()
-        st.pyplot(fig2)
+            st.subheader("Distribuição dos Impactos")
+            fig2, ax2 = plt.subplots(figsize=(8, 5))
+            shap.summary_plot(shap_values, sample, show=False)
+            plt.tight_layout()
+            st.pyplot(fig2)
 
-    except Exception as e:
-        st.error(f"❌ Erro ao calcular SHAP: {e}")
+        except Exception as e:
+            st.error(f"❌ Erro ao calcular SHAP: {e}")
