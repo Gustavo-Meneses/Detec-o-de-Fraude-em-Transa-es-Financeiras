@@ -4,5 +4,5 @@ matplotlib
 scikit-learn
 imbalanced-learn
 xgboost
-shap
+shap==0.41.0
 streamlit
